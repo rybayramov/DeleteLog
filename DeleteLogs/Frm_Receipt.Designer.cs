@@ -29,9 +29,13 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridViewX1 = new DevComponents.DotNetBar.Controls.DataGridViewX();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.koduDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.adıDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.miqdarıDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.faktLineBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.btn_save = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.txt_evrak_seri = new System.Windows.Forms.TextBox();
@@ -53,10 +57,6 @@
             this.txt_evrak_sira = new System.Windows.Forms.TextBox();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
-            this.koduDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.adıDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.miqdarıDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.faktLineBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.faktLineBindingSource)).BeginInit();
@@ -65,14 +65,14 @@
             // dataGridViewX1
             // 
             this.dataGridViewX1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewX1.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewX1.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridViewX1.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(215)))), ((int)(((byte)(229)))));
             this.dataGridViewX1.Location = new System.Drawing.Point(287, 181);
             this.dataGridViewX1.Name = "dataGridViewX1";
@@ -95,10 +95,34 @@
             this.dataGridView1.TabIndex = 1;
             this.dataGridView1.CancelRowEdit += new System.Windows.Forms.QuestionEventHandler(this.dataGridView1_CancelRowEdit);
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
+            this.dataGridView1.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEnter);
             this.dataGridView1.Enter += new System.EventHandler(this.dataGridView1_Enter);
             this.dataGridView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGridView1_KeyDown);
             this.dataGridView1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dataGridView1_KeyUp);
             this.dataGridView1.Leave += new System.EventHandler(this.dataGridView1_Leave);
+            // 
+            // koduDataGridViewTextBoxColumn
+            // 
+            this.koduDataGridViewTextBoxColumn.DataPropertyName = "Kodu";
+            this.koduDataGridViewTextBoxColumn.HeaderText = "Kodu";
+            this.koduDataGridViewTextBoxColumn.Name = "koduDataGridViewTextBoxColumn";
+            this.koduDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // adıDataGridViewTextBoxColumn
+            // 
+            this.adıDataGridViewTextBoxColumn.DataPropertyName = "Adı";
+            this.adıDataGridViewTextBoxColumn.HeaderText = "Adı";
+            this.adıDataGridViewTextBoxColumn.Name = "adıDataGridViewTextBoxColumn";
+            // 
+            // miqdarıDataGridViewTextBoxColumn
+            // 
+            this.miqdarıDataGridViewTextBoxColumn.DataPropertyName = "Miqdarı";
+            this.miqdarıDataGridViewTextBoxColumn.HeaderText = "Miqdarı";
+            this.miqdarıDataGridViewTextBoxColumn.Name = "miqdarıDataGridViewTextBoxColumn";
+            // 
+            // faktLineBindingSource
+            // 
+            this.faktLineBindingSource.DataSource = typeof(DeleteLogs.Frm_Receipt.FaktLine);
             // 
             // btn_save
             // 
@@ -154,7 +178,7 @@
             this.txt_CariHkodu.Name = "txt_CariHkodu";
             this.txt_CariHkodu.Size = new System.Drawing.Size(117, 20);
             this.txt_CariHkodu.TabIndex = 6;
-            this.txt_CariHkodu.Text = "0261";
+            this.txt_CariHkodu.Text = "0790";
             this.txt_CariHkodu.TextChanged += new System.EventHandler(this.txt_CariHkodu_TextChanged);
             // 
             // label3
@@ -293,29 +317,6 @@
             this.button5.Text = "...";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Visible = false;
-            // 
-            // koduDataGridViewTextBoxColumn
-            // 
-            this.koduDataGridViewTextBoxColumn.DataPropertyName = "Kodu";
-            this.koduDataGridViewTextBoxColumn.HeaderText = "Kodu";
-            this.koduDataGridViewTextBoxColumn.Name = "koduDataGridViewTextBoxColumn";
-            this.koduDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // adıDataGridViewTextBoxColumn
-            // 
-            this.adıDataGridViewTextBoxColumn.DataPropertyName = "Adı";
-            this.adıDataGridViewTextBoxColumn.HeaderText = "Adı";
-            this.adıDataGridViewTextBoxColumn.Name = "adıDataGridViewTextBoxColumn";
-            // 
-            // miqdarıDataGridViewTextBoxColumn
-            // 
-            this.miqdarıDataGridViewTextBoxColumn.DataPropertyName = "Miqdarı";
-            this.miqdarıDataGridViewTextBoxColumn.HeaderText = "Miqdarı";
-            this.miqdarıDataGridViewTextBoxColumn.Name = "miqdarıDataGridViewTextBoxColumn";
-            // 
-            // faktLineBindingSource
-            // 
-            this.faktLineBindingSource.DataSource = typeof(DeleteLogs.Frm_Receipt.FaktLine);
             // 
             // Frm_Receipt
             // 

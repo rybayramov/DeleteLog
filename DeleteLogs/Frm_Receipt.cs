@@ -45,35 +45,26 @@ namespace DeleteLogs
         }
         public class FaktLine
         {
-            
             public string Kodu { get; set; }
             public string Adı { get; set; }
             public string Miqdarı { get; set; }
-
-
         }
         private void Form1_Load(object sender, EventArgs e)
         {
             button1_Click(null, null);
-            FPrintObject = new List<FaktLine>();
-            FaktLine cash1 = new FaktLine() { Kodu = "14010101.0628", Adı = "NAXCİVAN LAVASI", Miqdarı = "5",};
-            FaktLine cash2 = new FaktLine() { Kodu = "14010101.1236", Adı = "SAC LAVASI", Miqdarı = "10", };
+            FPrintObject = new List<FaktLine>();  
             for (int i = 0; i < 100; i++)
             {
                 FaktLine cash3 = new FaktLine() { Kodu = "", Adı = "", Miqdarı = "", };
                 FPrintObject.Add(cash3);
             }
-                
             dataGridView1.DataSource = FPrintObject;
-
-
-            txt_evrak_seri.Text = user_kod;
+            txt_evrak_seri.Text = shop;
             txt_srmMerkez.Text = shop;
         }
 
         private void btn_save_Click(object sender, EventArgs e)
         {
-
 
             int setrno = 0;
 
@@ -142,21 +133,66 @@ namespace DeleteLogs
        
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-        { int yourLastColumnIndex = dataGridView1.Columns.Count - 1;
+        {
+            int yourLastColumnIndex = dataGridView1.Columns.Count - 1;
             if (dataGridView1.Focused && keyData == Keys.Tab)
             {
                 if (dataGridView1.CurrentCell.ColumnIndex == yourLastColumnIndex &&
             dataGridView1.CurrentRow.Index == dataGridView1.RowCount - 1)
-        {
+                {
                     FaktLine cash = new FaktLine() { Kodu = "", Adı = "", Miqdarı = "", };
                     FPrintObject.Add(cash);
                     dataGridView1.DataSource = null;
                     dataGridView1.DataSource = FPrintObject;
-                    dataGridView1.CurrentCell = dataGridView1.Rows[dataGridView1.Rows.Count-2].Cells[2];
+                    dataGridView1.CurrentCell = dataGridView1.Rows[dataGridView1.Rows.Count - 2].Cells[2];
 
-                //    dataGridView1.CurrentCell.Selected = true;
-                } }
+                }
+            }
+            if (gridedit == true && keyData == Keys.Enter)
+            {
+                int rowindex = dataGridView1.CurrentCell.RowIndex;
+                int columnindex = dataGridView1.CurrentCell.ColumnIndex;
+                dataGridView1.CurrentCell = dataGridView1.Rows[rowindex].Cells[1];
+                string search = dataGridView1.Rows[rowindex].Cells[columnindex].Value.ToString();
+                string connectionString = ConfigurationManager.ConnectionStrings["MicroDB"].ConnectionString;
+                SqlConnection conn = new SqlConnection(connectionString);
+                conn.Open();
+                SqlCommand comm = conn.CreateCommand();
+                comm.CommandText = @"select sto_kod, sto_isim from STOKLAR where
+  sto_kod in (select bar_stokkodu
+  from BARKOD_TANIMLARI
+  WHERE bar_kodu LIKE '%" + search + "%' OR bar_stokkodu LIKE '%" + search + "%') and sto_sat_cari_kod = '" + txt_CariHkodu.Text + "'";
+                SqlDataReader reader = comm.ExecuteReader();
+                int RecordCount = 0;
 
+
+                while (reader.Read())
+                {
+                    ++RecordCount;
+                    if (RecordCount > 1)
+                    {
+                        break;
+                    }
+
+                    FaktLine currentObject = (FaktLine)dataGridView1.CurrentRow.DataBoundItem;
+
+                    if (RecordCount == 1)
+                    {
+                        currentObject.Kodu = reader["sto_kod"].ToString();
+                        currentObject.Adı = reader["sto_isim"].ToString();
+                        dataGridView1.DataSource = null;
+                        dataGridView1.DataSource = FPrintObject;
+                    }
+                }
+                if (RecordCount == 0)
+                {
+                    MessageBox.Show("Kod və ya Cari Hesab səhv seçilib");
+                }
+            }
+            
+                  
+                
+                    
             if (gridedit==true && keyData == Keys.F10)
             {
                 using (var form = new Frm_Stok())
@@ -165,7 +201,8 @@ namespace DeleteLogs
                     int rowindex = dataGridView1.CurrentCell.RowIndex;
                     int columnindex = dataGridView1.CurrentCell.ColumnIndex;
                     dataGridView1.CurrentCell = dataGridView1.Rows[rowindex].Cells[1];
-                    form.ReturnValue1 = dataGridView1.Rows[rowindex].Cells[columnindex].Value.ToString(); 
+                    form.ReturnValue1 = dataGridView1.Rows[rowindex].Cells[columnindex].Value.ToString();
+                    form.CariHesab = txt_CariHkodu.Text; 
                     var result = form.ShowDialog();
                     if (result == DialogResult.OK)
                     {
@@ -241,6 +278,8 @@ namespace DeleteLogs
 
         private void dataGridView1_Enter(object sender, EventArgs e)
         {
+           if(dataGridView1.CurrentCell.ColumnIndex == 2)
+                MessageBox.Show("miqdar");
             gridedit = true;
         }
 
@@ -252,6 +291,14 @@ namespace DeleteLogs
         private void button2_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void dataGridView1_CellEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            //if(e.ColumnIndex == 2)
+            //{
+            //    MessageBox.Show("miqdar xanasi");
+            //}
         }
     }
 }

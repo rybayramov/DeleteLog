@@ -15,6 +15,7 @@ namespace DeleteLogs
     public partial class Frm_Stok : Form
     {
         public string ReturnValue1 { get; set; }
+        public string CariHesab { get; set; }
         public Frm_Stok()
         {
             InitializeComponent();
@@ -44,7 +45,7 @@ namespace DeleteLogs
             SqlCommand sqlCmd = new SqlCommand();
             sqlCmd.Connection = con;
             sqlCmd.CommandType = CommandType.Text;
-            sqlCmd.CommandText = @"select sto_kod,sto_isim from STOKLAR";
+            sqlCmd.CommandText = @"select sto_kod,sto_isim from STOKLAR where sto_sat_cari_kod='" + CariHesab+"'";
             SqlDataAdapter sqlDataAdap = new SqlDataAdapter(sqlCmd);
 
             DataTable dtRecord = new DataTable();

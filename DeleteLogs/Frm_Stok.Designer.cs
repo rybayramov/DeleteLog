@@ -41,14 +41,14 @@
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.DoubleClick += new System.EventHandler(this.dataGridView1_DoubleClick);
             // 
-            // Frm_CariHesab
+            // Frm_Stok
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(402, 325);
+            this.ClientSize = new System.Drawing.Size(397, 324);
             this.Controls.Add(this.dataGridView1);
-            this.Name = "Frm_CariHesab";
-            this.Text = "Frm_CariHesab";
+            this.Name = "Frm_Stok";
+            this.Text = "Mallar";
             this.Load += new System.EventHandler(this.Frm_CariHesab_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
