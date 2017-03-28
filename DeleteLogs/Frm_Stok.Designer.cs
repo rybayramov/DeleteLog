@@ -48,7 +48,7 @@
             this.ClientSize = new System.Drawing.Size(397, 324);
             this.Controls.Add(this.dataGridView1);
             this.Name = "Frm_Stok";
-            this.Text = "Mallar";
+            this.Text = "MallarTestTestTest";
             this.Load += new System.EventHandler(this.Frm_CariHesab_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
